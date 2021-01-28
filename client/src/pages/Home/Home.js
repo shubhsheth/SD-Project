@@ -94,7 +94,6 @@ const useStyles = makeStyles((theme) => ({
 export default function Home() {
   const classes = useStyles();
 
-
   return (
     <div className={classes.root}>
       <Grid container class="section">
@@ -123,7 +122,7 @@ export default function Home() {
           <Button className={classes.button}>Get Started</Button>
         </Grid>
         <Grid item>
-          <img src={HomeBG} className={classes.pic}></img>
+          <img src={HomeBG} alt="" className={classes.pic}></img>
         </Grid>
       </Grid>
     </div>
