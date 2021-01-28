@@ -10,5 +10,7 @@
 4. `npm start`
 
 ### Installation and Starting (server)
-
-COMING SOON
+1. `git clone https://github.com/shubhsheth/SD-Project`
+2. `cd server`
+3. `npm i`
+4. `nodemon index.js OR node index.js`
