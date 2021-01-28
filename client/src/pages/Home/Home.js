@@ -10,6 +10,8 @@ import Typography from "@material-ui/core/Typography";
 import Button from "@material-ui/core/Button";
 import Link from "@material-ui/core/Link";
 
+import HomeBG from "../../assets/homepic.svg";
+
 const useStyles = makeStyles((theme) => ({
   root: {
     flexGrow: 1,
@@ -67,7 +69,7 @@ const useStyles = makeStyles((theme) => ({
   },
   calc: {
     textAlign: "center",
-    marginBottom: theme.spacing(40),
+    marginBottom: theme.spacing(20),
   },
   button: {
     background: "#000000",
@@ -82,10 +84,17 @@ const useStyles = makeStyles((theme) => ({
     fontFamily: "Oleo Script",
     fontSize: "18px",
   },
+  pic: {
+    backgroundRepeat: "no-repeat",
+    height: "30vh",
+    width: "30vw",
+  },
 }));
 
 export default function Home() {
   const classes = useStyles();
+
+
   return (
     <div className={classes.root}>
       <Grid container class="section">
@@ -112,6 +121,9 @@ export default function Home() {
             Calculate Fuel Trip Prices Easily!
           </Typography>
           <Button className={classes.button}>Get Started</Button>
+        </Grid>
+        <Grid item>
+          <img src={HomeBG} className={classes.pic}></img>
         </Grid>
       </Grid>
     </div>
