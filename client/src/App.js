@@ -1,12 +1,12 @@
-import React from 'react';
+import React from "react";
 import "./App.css";
 // import Navbar from "./components/NavBar/Navbar";
 import Home from "./pages/Home/Home";
 import Login from "./components/Login/Login";
 import Signup from "./components/Signup/Signup";
+import FuelQuote from "./pages/FuelQuote/FuelQuote";
+import FuelHistory from "./pages/FuelHistory/FuelHistory";
 import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
-
-
 
 function App() {
   return (
@@ -19,14 +19,18 @@ function App() {
           <Route path="/signup">
             <Signup />
           </Route>
+          <Route path="/fuel-quote">
+            <FuelQuote />
+          </Route>
+          <Route path="/fuel-history">
+            <FuelHistory />
+          </Route>
           <Route path="/">
-            {/* <Navbar /> */}
             <Home />
           </Route>
         </Switch>
       </div>
     </Router>
-
   );
 }
 
