@@ -94,7 +94,7 @@ const useStyles = makeStyles((theme) => ({
 export default function Home() {
   const classes = useStyles();
 
-  return (
+  return (  
     <div className={classes.root}>
       <Grid container class="section">
         <AppBar className={classes.navbar} position="absolute">
