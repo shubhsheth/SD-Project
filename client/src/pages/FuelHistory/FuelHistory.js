@@ -118,11 +118,12 @@ Row.propTypes = {
 };
 
 const rows = [
-  createData('1', 20, "1234 Houston Rd, Houston TX 77001", "2/10/2021", 2.09, 41.8),
-  createData('Ice cream sandwich', 237, 9.0, 37, 4.3, 4.99),
-  createData('Eclair', 262, 16.0, 24, 6.0, 3.79),
-  createData('Cupcake', 305, 3.7, 67, 4.3, 2.5),
-  createData('Gingerbread', 356, 16.0, 49, 3.9, 1.5),
+  createData('1', 15, "321 Chicken Street, Houston TX 77002", "2/15/2021", 2.98, 44.70),
+  createData('2', 12, "321 Donut Street, Houston TX 77001", "2/12/2021", 2.61, 36.7),
+  createData('3', 15, "961 Milam Street, Houston TX 77001", "2/13/2021", 2.12, 47.8),
+  createData('4', 19, "616 Travis Rd, Houston TX 77001", "2/15/2021", 2.62, 41.8),
+  createData('5', 10, "12 Houston Rd, Houston TX 77001", "2/17/2021", 2.29, 41.8),
+
 ];
 
 export default function FuelHistory() {

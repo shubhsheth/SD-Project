@@ -9,12 +9,12 @@ import "react-vertical-timeline-component/style.min.css";
 export default function FuelQuoteList() {
   return (
     <div>
-      <VerticalTimeline layout={"1-column-left"}>
+      <VerticalTimeline layout={"1-column-right"}>
         <VerticalTimelineElement
           className="vertical-timeline-element--work"
           contentStyle={{ background: "rgb(33, 150, 243)", color: "#fff" }}
           contentArrowStyle={{ borderRight: "7px solid  rgb(33, 150, 243)" }}
-          date="February 2, 2021"
+          date="February 15, 2021"
           iconStyle={{ background: "rgb(33, 150, 243)", color: "#fff" }}
         >
           <h3 className="vertical-timeline-element-title">FuelQuoteID: 1</h3>
@@ -22,11 +22,12 @@ export default function FuelQuoteList() {
             Gallons Requested: 15
           </h3>
           <h3 className="vertical-timeline-element-subtitle">
-            Price per gallon: $2.50
+            Price per gallon: $2.99
           </h3>
-          <p>123 Donut Street, Houston, TX, 77002</p>
+          <p>321 Chicken, Houston, TX, 77002</p>
+          {/* <button>CLICK ME</button> */}
         </VerticalTimelineElement>
-        <VerticalTimelineElement
+        {/* <VerticalTimelineElement
           className="vertical-timeline-element--work"
           contentStyle={{
             background: "#FFF",
@@ -44,7 +45,7 @@ export default function FuelQuoteList() {
             Price per gallon: $2.09
           </h3>
           <p>456 Donut Street, Houston, TX, 77002</p>
-        </VerticalTimelineElement>
+        </VerticalTimelineElement> */}
       </VerticalTimeline>
     </div>
   );
