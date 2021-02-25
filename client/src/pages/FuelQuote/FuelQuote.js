@@ -11,6 +11,8 @@ import Link from "@material-ui/core/Link";
 import MenuButton from "../../components/MenuButton/MenuButton";
 
 import FuelQuoteList from "./FuelQuoteList";
+import FuelQuoteGetQuote from "./FuelQuoteGetQuote"
+
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -22,7 +24,6 @@ const useStyles = makeStyles((theme) => ({
     height: "200rem",
     background: "linear-gradient(45deg, #1493ce, #ff0057)",
     display: "flex",
-
   },
   navbar: {
     background: "transparent",
@@ -63,8 +64,7 @@ const useStyles = makeStyles((theme) => ({
   },
   calc: {
     textAlign: "center",
-    marginTop: theme.spacing(20)
-   
+    marginTop: theme.spacing(20),
   },
   button: {
     background: "#000000",
@@ -78,10 +78,11 @@ const useStyles = makeStyles((theme) => ({
     },
     fontFamily: "Oleo Script",
     fontSize: "18px",
+    marginTop: "20px",
   },
   quoteList: {
-    marginTop: theme.spacing(20)
-  }
+    marginTop: theme.spacing(20),
+  },
 }));
 
 export default function FuelQuote() {
@@ -110,6 +111,7 @@ export default function FuelQuote() {
             Get your Fuel Quote Now!
           </Typography>
           <MenuButton />
+          <FuelQuoteGetQuote />
         </Grid>
         <Grid item xs={12} sm={6} className={classes.quoteList}>
           <FuelQuoteList />
