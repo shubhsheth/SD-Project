@@ -10,6 +10,7 @@ const apiRouter = require("./routes");
 
 const db = require("./db/db");
 const quote = require("./routes/quote");
+const login = require("./routes/login");
 
 app.use(cors());
 app.use(express.json());
@@ -32,6 +33,9 @@ app.listen(process.env.PORT || "5000", () => {
 });
 
 // Login
+app.get('/login', login.authUser);
+app.get('/register', login.addUser);
+app.get('/update-profile', login.addUserProfile);
 
 
 // Quotes
