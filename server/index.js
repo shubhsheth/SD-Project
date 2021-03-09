@@ -38,9 +38,9 @@ app.listen(process.env.PORT || "5000", () => {
 
 // Login
 app.get("/login", login.authUser);
-app.get("/register", login.addUser);
-app.get("/update-profile", login.addUserProfile);
+app.get("/signup", login.addUser);
+app.get("/profile-management", login.addUserProfile);
 
 // Quotes
 app.get("/quote", quote.getQuote);
-app.get("/quote-history", quote.getHistory);
+app.get("/fuel-history", quote.getHistory);

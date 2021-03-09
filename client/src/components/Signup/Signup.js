@@ -1,5 +1,5 @@
-// import React, { useState } from "react";
-import React from "react";
+import React, { useState } from "react";
+
 import Avatar from "@material-ui/core/Avatar";
 import Button from "@material-ui/core/Button";
 import CssBaseline from "@material-ui/core/CssBaseline";
@@ -13,8 +13,8 @@ import { makeStyles } from "@material-ui/core/styles";
 import Container from "@material-ui/core/Container";
 
 // import Alert from "@material-ui/lab/Alert";
-// import axios from "axios";
-// import { useHistory } from "react-router-dom";
+import axios from "axios";
+import { useHistory } from "react-router-dom";
 
 function Copyright() {
   return (
@@ -62,16 +62,34 @@ export default function Signup() {
   //   password: "",
   // });
 
-  // const [signupError, setSignupError] = useState("");
-
-  // const handleChange = (e) => {
-  //   setSignupInfo({...signupInfo, [e.target.name]: e.target.value });
+  // const handleClickSignup = () => {
+  //   const data = {
+  //     username: signupInfo.username,
+  //     password: signupInfo.password,
+  //   };
+  //   axios.post("", data).then((res) => {});
   // };
 
-  // let history = useHistory();
-  // const signUp = (e) => {
+  // const handleChange = (e) => {
+  //   setSignupInfo({ ...signupInfo, [e.target.name]: e.target.value });
+  // };
 
-  // }
+  // const [signupError, setSignupError] = useState("");
+
+  // let history = useHistory();
+  // const signup = (e) => {
+  //   axios
+  //     .post("http://localhost:3000/signup", signupInfo)
+  //     .then((res) => {
+  //       if (res.data.error) {
+  //         setSignupError(res.data.error);
+  //       } else {
+  //         history.push("/login");
+  //       }
+  //     })
+  //     .catch((err) => console.log(err));
+  //   e.preventDefault();
+  // };
 
   return (
     <Container component="main" maxWidth="xs">
@@ -111,6 +129,17 @@ export default function Signup() {
             id="password"
             autoComplete="password"
           />
+          {/* <TextField
+            variant="outlined"
+            margin="normal"
+            required
+            fullWidth
+            name="confirm password"
+            label="Confirm Password"
+            type="password"
+            id="confirm password"
+            autoComplete="confirm password"
+          /> */}
           <Button
             type="submit"
             fullWidth
