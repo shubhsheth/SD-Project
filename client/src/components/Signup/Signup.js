@@ -1,3 +1,4 @@
+// import React, { useState } from "react";
 import React from "react";
 import Avatar from "@material-ui/core/Avatar";
 import Button from "@material-ui/core/Button";
@@ -10,6 +11,10 @@ import LockOutlinedIcon from "@material-ui/icons/LockOutlined";
 import Typography from "@material-ui/core/Typography";
 import { makeStyles } from "@material-ui/core/styles";
 import Container from "@material-ui/core/Container";
+
+// import Alert from "@material-ui/lab/Alert";
+// import axios from "axios";
+// import { useHistory } from "react-router-dom";
 
 function Copyright() {
   return (
@@ -52,8 +57,29 @@ const useStyles = makeStyles((theme) => ({
 export default function Signup() {
   const classes = useStyles();
 
+  // const [signupInfo, setSignupInfo] = useState({
+  //   username: "",
+  //   password: "",
+  // });
+
+  // const [signupError, setSignupError] = useState("");
+
+  // const handleChange = (e) => {
+  //   setSignupInfo({...signupInfo, [e.target.name]: e.target.value });
+  // };
+
+  // let history = useHistory();
+  // const signUp = (e) => {
+
+  // }
+
   return (
     <Container component="main" maxWidth="xs">
+      {/* {signupError ? (
+        <Alert variant="filled" severity="error">
+          {signupError}
+        </Alert>
+      ) : null} */}
       <CssBaseline />
       <div className={classes.paper}>
         <Avatar className={classes.avatar}>
@@ -62,7 +88,7 @@ export default function Signup() {
         <Typography component="h1" variant="h4" className={classes.header}>
           Sign Up
         </Typography>
-        <form className={classes.form} noValidate>
+        <form className={classes.form}>
           <TextField
             variant="outlined"
             margin="normal"
@@ -83,7 +109,7 @@ export default function Signup() {
             label="Password"
             type="password"
             id="password"
-            autoComplete="current-password"
+            autoComplete="password"
           />
           <Button
             type="submit"
