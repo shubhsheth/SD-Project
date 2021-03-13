@@ -28,10 +28,10 @@ app.listen(process.env.PORT || "5000", () => {
 
 // Login
 app.post('/login', login.authUser);
-app.post('/register', login.addUser);
-app.post('/update-profile', login.addUserProfile);
+app.post('/signup', login.addUser);
+app.post('/profile-management', login.addUserProfile);
 
 
 // Quotes
-app.get('/quote', quote.getQuote);
-app.get('/quote-history', quote.getHistory);
+app.get("/quote", quote.getQuote);
+app.get("/fuel-history", quote.getHistory);
