@@ -6,6 +6,10 @@ const app = express();
 
 const bodyParser = require("body-parser");
 const cors = require("cors");
+
+// const bcrypt = require("bcrypt"); ENCRYPTION
+// const saltRounds = 10; ENCRYPTION
+
 const apiRouter = require("./routes");
 
 const db = require("./db/db");
@@ -19,9 +23,9 @@ app.use((err, req, res, next) => {
   // This check makes sure this is a JSON parsing issue, but it might be
   // coming from any middleware, not just body-parser:
 
-  if (err instanceof SyntaxError && err.status === 400 && 'body' in err) {
-      console.error(err);
-      return res.sendStatus(400); // Bad request
+  if (err instanceof SyntaxError && err.status === 400 && "body" in err) {
+    console.error(err);
+    return res.sendStatus(400); // Bad request
   }
   next();
 });
@@ -33,11 +37,10 @@ app.listen(process.env.PORT || "5000", () => {
 });
 
 // Login
-app.get('/login', login.authUser);
-app.get('/register', login.addUser);
-app.get('/update-profile', login.addUserProfile);
-
+app.get("/login", login.authUser);
+app.get("/signup", login.addUser);
+app.get("/profile-management", login.addUserProfile);
 
 // Quotes
-app.get('/quote', quote.getQuote);
-app.get('/quote-history', quote.getHistory);
+app.get("/quote", quote.getQuote);
+app.get("/fuel-history", quote.getHistory);
