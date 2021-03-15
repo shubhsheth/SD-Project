@@ -1,44 +1,83 @@
-const getQuote = (req, res) => {
+const db = require("../db/db");
+
+const getQuote = async (req, res) => {
     const currentPrice = 1.5;
     const profitFactor = 0.1;
     
     if (!req.body.userid || !req.body.location || !req.body.gallons) {
-        res.sendStatus(400);
+        return res.sendStatus(400);
+    } else {
+        const userid = req.body.userid;
+        const location = req.body.location;
+        const gallons = req.body.gallons;
+    
+        const date = new Date();
+        const time = date.getTime();
+
+        let locationFactor = 0.04;
+        if (location == "Texas") {
+            locationFactor = 0.02;
+        }
+    
+        // TODO: Bug - await doesn't work properly
+        let rateHistoryFactor = (await hasHistory(userid) == true) ? 0.01 : 0;
+    
+        let gallonRequestedFactor = 0.03;
+        if (gallons > 1000) {
+            gallonRequestedFactor = 0.02;
+        }
+    
+
+        console.log({locationFactor, rateHistoryFactor, gallonRequestedFactor, profitFactor});
+
+        const margin = Number((currentPrice * (locationFactor - rateHistoryFactor + gallonRequestedFactor + profitFactor)).toFixed(4));
+        const quote = currentPrice + margin;
+        const total = gallons * quote;
+    
+
+        db.query('INSERT INTO `quotes` (idusers, gallons, address, date, price, total) VALUES (?, ?, ?, ?, ?, ?)', [userid, gallons, location, time, quote, total],
+            (err, result, fields) => {
+                if (err) { return next(new Error([err])); }
+
+                return res.send({ margin, quote, total });
+            }
+        );
+    
     }
-
-    const userid = req.body.userid;
-    const location = req.body.location;
-    const gallons = req.body.gallons;
-
-    let locationFactor = 0.04;
-    if (location == "Texas") {
-        locationFactor = 0.02;
-    }
-
-    let rateHistoryFactor = 0;
-    if (hasHistory(userid)) {
-        rateHistoryFactor = 0.01;
-    }
-
-    let gallonRequestedFactor = 0.03;
-    if (gallons > 1000) {
-        gallonRequestedFactor = 0.02;
-    }
-
-    const margin = currentPrice * (locationFactor - rateHistoryFactor + gallonRequestedFactor + profitFactor);
-    const quote = currentPrice + margin;
-    const total = gallons * quote;
-
-    res.send({ margin, quote, total });
 }
 
 const hasHistory = (userid) => {
-    // TODO:
-    return true;
+    db.query('SELECT * FROM `quotes` WHERE idusers = ?', userid,
+        (err, result, fields) => {
+            if (err) { return false; }
+
+            console.log(result.length);
+
+            if (result.length > 0) {
+                return true;
+            } else {
+                return false;
+            }
+        }
+    );
 }
 
-const getHistory = (req, res) => {
-    res.send("Received");
+const getHistory = (req, res, next) => {
+
+    const userid = req.body.userid;
+
+    if (!userid) {
+        return res.sendStatus(400);
+    } else {
+        db.query('SELECT * FROM `quotes` WHERE idusers = ?', userid,
+            (err, result, fields) => {
+                if (err) { return next(new Error([err])); }
+
+                console.log(result);
+                return res.json(result).status(200);
+            }
+        );
+    }
 }
 
 module.exports = { getQuote, getHistory };
