@@ -26,9 +26,6 @@ const getQuote = async (req, res) => {
         if (gallons > 1000) {
             gallonRequestedFactor = 0.02;
         }
-    
-
-        console.log({locationFactor, rateHistoryFactor, gallonRequestedFactor, profitFactor});
 
         const margin = Number((currentPrice * (locationFactor - rateHistoryFactor + gallonRequestedFactor + profitFactor)).toFixed(4));
         const quote = currentPrice + margin;
@@ -51,8 +48,6 @@ const hasHistory = (userid) => {
         (err, result, fields) => {
             if (err) { return false; }
 
-            console.log(result.length);
-
             if (result.length > 0) {
                 return true;
             } else {
@@ -73,7 +68,6 @@ const getHistory = (req, res, next) => {
             (err, result, fields) => {
                 if (err) { return next(new Error([err])); }
 
-                console.log(result);
                 return res.json(result).status(200);
             }
         );
