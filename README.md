@@ -20,7 +20,7 @@
 
 ## Contributors :star:
 
-Made by the fellowing team members! :crown::crown::
+Made by the following team members! :crown::crown::
 
 <table>
   <tr>
