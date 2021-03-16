@@ -35,3 +35,5 @@ app.post('/profile-management', login.addUserProfile);
 // Quotes
 app.get("/quote", quote.getQuote);
 app.get("/fuel-history", quote.getHistory);
+
+module.exports = app
