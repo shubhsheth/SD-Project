@@ -16,9 +16,11 @@
     "cors": "^2.8.5",
     "dotenv": "^8.2.0",
     "express": "^4.17.1",
+    "express-validator": "^6.10.0",
     "md5": "^2.3.0",
     "mysql": "^2.18.1",
-    "nodemon": "^2.0.7"
+    "nodemon": "^2.0.7",
+    "validator": "^13.5.2"
   },
   "devDependencies": {
     "chai": "^4.3.4",

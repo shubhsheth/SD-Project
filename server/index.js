@@ -2,8 +2,9 @@ const dotenv = require("dotenv");
 dotenv.config();
 
 const express = require("express");
-const app = express();
+const { check, validationResult } = require("express-validator");
 
+const app = express();
 const bodyParser = require("body-parser");
 const cors = require("cors");
 
@@ -14,9 +15,9 @@ app.use(cors());
 app.use(express.json());
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use((err, req, res, next) => {
-  if (err instanceof SyntaxError && err.status === 400 && 'body' in err) {
-      console.error(err);
-      return res.sendStatus(400); // Bad request
+  if (err instanceof SyntaxError && err.status === 400 && "body" in err) {
+    console.error(err);
+    return res.sendStatus(400); // Bad request
   }
   next();
 });
@@ -27,13 +28,12 @@ app.listen(process.env.PORT || "5000", () => {
 });
 
 // Login
-app.post('/login', login.authUser);
-app.post('/signup', login.addUser);
-app.post('/profile-management', login.addUserProfile);
-
+app.post("/login", login.authUser);
+app.post("/signup", login.addUser);
+app.post("/profile-management", login.addUserProfile);
 
 // Quotes
 app.get("/quote", quote.getQuote);
 app.get("/fuel-history", quote.getHistory);
 
-module.exports = app
+module.exports = app;
