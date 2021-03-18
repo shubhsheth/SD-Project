@@ -57,39 +57,32 @@ const useStyles = makeStyles((theme) => ({
 export default function Signup() {
   const classes = useStyles();
 
-  // const [signupInfo, setSignupInfo] = useState({
-  //   username: "",
-  //   password: "",
-  // });
+  const [signupInfo, setSignupInfo] = useState({
+    username: "",
+    password: "",
+  });
 
-  // const handleClickSignup = () => {
-  //   const data = {
-  //     username: signupInfo.username,
-  //     password: signupInfo.password,
-  //   };
-  //   axios.post("", data).then((res) => {});
-  // };
-
-  // const handleChange = (e) => {
-  //   setSignupInfo({ ...signupInfo, [e.target.name]: e.target.value });
-  // };
+  const handleChange = (e) => {
+    setSignupInfo({ ...signupInfo, [e.target.name]: e.target.value });
+  };
 
   // const [signupError, setSignupError] = useState("");
 
-  // let history = useHistory();
-  // const signup = (e) => {
-  //   axios
-  //     .post("http://localhost:3000/signup", signupInfo)
-  //     .then((res) => {
-  //       if (res.data.error) {
-  //         setSignupError(res.data.error);
-  //       } else {
-  //         history.push("/login");
-  //       }
-  //     })
-  //     .catch((err) => console.log(err));
-  //   e.preventDefault();
-  // };
+  let history = useHistory();
+  const signup = (e) => {
+    axios
+      .post("http://localhost:5000/signup", signupInfo)
+      .then((res) => {
+        console.log(res);
+        if (res.data.error) {
+          console.log(res.data.error);
+        } else {
+          history.push("/login");
+        }
+      })
+      .catch((err) => console.log(err));
+    e.preventDefault();
+  };
 
   return (
     <Container component="main" maxWidth="xs">
@@ -117,6 +110,7 @@ export default function Signup() {
             name="username"
             autoComplete="username"
             autoFocus
+            onChange={handleChange}
           />
           <TextField
             variant="outlined"
@@ -128,6 +122,7 @@ export default function Signup() {
             type="password"
             id="password"
             autoComplete="password"
+            onChange={handleChange}
           />
           {/* <TextField
             variant="outlined"
@@ -145,6 +140,7 @@ export default function Signup() {
             fullWidth
             variant="contained"
             className={classes.submit}
+            onClick={signup}
           >
             Sign Up
           </Button>
