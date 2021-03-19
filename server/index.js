@@ -29,11 +29,12 @@ app.listen(process.env.PORT || "5000", () => {
 
 // Login
 app.post("/login", login.authUser);
-app.post("/signup", login.addUser);
-app.post("/profile-management", login.addUserProfile);
+app.post("/signup", login.addUser, login.addUserValidation);
+app.post("/profile-management", login.addUserProfile, login.addUserProfileValidation);
 
 // Quotes
-app.get("/quote", quote.getQuote);
+app.get("/quote", quote.getQuote, quote.getQuoteValidation);
 app.get("/fuel-history", quote.getHistory);
+
 
 module.exports = app;
