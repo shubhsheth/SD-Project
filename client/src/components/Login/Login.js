@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import Avatar from '@material-ui/core/Avatar';
 import Button from '@material-ui/core/Button';
 import CssBaseline from '@material-ui/core/CssBaseline';
@@ -11,6 +11,8 @@ import LockOutlinedIcon from '@material-ui/icons/LockOutlined';
 import Typography from '@material-ui/core/Typography';
 import { makeStyles } from '@material-ui/core/styles';
 import Logo from '../../assets/Logo.png';
+
+import axios from "axios";
 
 function Copyright() {
   return (
@@ -64,6 +66,27 @@ const useStyles = makeStyles((theme) => ({
 export default function Login() {
   const classes = useStyles();
 
+  const [loginCred, setLoginCred] = useState({
+    username: "",
+    password: "",
+  });
+
+  const handleChange = (e) => {
+    setLoginCred({
+      ...loginCred,
+      [e.target.name]: e.target.value,
+    });
+  };
+
+  const login = (e) => {
+    e.preventDefault();
+    axios.post("https://sd-project.herokuapp.com/login", loginCred)
+    .then((res) => {
+      console.log(loginCred);
+    })
+  }
+
+
   return (
     <Grid container component="main" className={classes.root}>
       <CssBaseline />
@@ -87,6 +110,7 @@ export default function Login() {
               name="username"
               autoComplete="username"
               autoFocus
+              onChange={handleChange}
             />
             <TextField
               variant="outlined"
@@ -98,12 +122,14 @@ export default function Login() {
               type="password"
               id="password"
               autoComplete="current-password"
+              onChange={handleChange}
             />
             <Button
               type="submit"
               fullWidth
               variant="contained"
               className={classes.submit}
+              onClick={login}
             >
               Sign In
             </Button>

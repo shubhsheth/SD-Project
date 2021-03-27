@@ -63,11 +63,12 @@ const getQuote = async (req, res) => {
 
 const getQuoteValidation = () => {
   [
-    check("location").isAlphanumeric(),
+    check("userId").isAlpha(),
+    check("location").isAlpha(),
     check("gallons").isNumeric(),
-    check("date").isDate(),
-    check("quote").isNumeric(),
-    check("total").isNumeric(),
+    // check("date").isDate(),
+    // check("quote").isNumeric(),
+    // check("total").isNumeric(),
   ];
 };
 
