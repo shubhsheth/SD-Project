@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import { makeStyles } from "@material-ui/core/styles";
 import Button from "@material-ui/core/Button";
 import Dialog from "@material-ui/core/Dialog";
@@ -17,6 +17,7 @@ import ListItemText from "@material-ui/core/ListItemText";
 import ListItem from "@material-ui/core/ListItem";
 import List from "@material-ui/core/List";
 import Divider from "@material-ui/core/Divider";
+import axios from "axios";
 
 const useStyles = makeStyles((theme) => ({
   appBar: {
@@ -64,12 +65,36 @@ export default function FuelQuoteGetQuote() {
   const classes = useStyles();
   const [open, setOpen] = React.useState(false);
 
+  const [quoteForm, setQuoteForm] = useState({
+    gallons: "",
+    address: "",
+  });
+
+  const handleChange = (e) => {
+    setQuoteForm({
+      ...quoteForm,
+      [e.target.name]: e.target.value,
+    });
+  };
+
+  //opening the quote form
   const handleClickOpen = () => {
     setOpen(true);
   };
 
+  //closing the quote form
   const handleClose = () => {
     setOpen(false);
+  };
+
+  //submitting the quote form
+  const handleSubmitForm = (e) => {
+    e.preventDefault();
+    axios
+      .post("https://sd-project.herokuapp.com/fuel-quote", quoteForm)
+      .then((res) => {
+        console.log(quoteForm);
+      });
   };
 
   return (
@@ -100,7 +125,7 @@ export default function FuelQuoteGetQuote() {
             <Typography variant="h6" className={classes.title}>
               Fuel Quote Form
             </Typography>
-            <Button autoFocus color="inherit" onClick={handleClose}>
+            <Button autoFocus color="inherit" onClick={handleSubmitForm}>
               Submit Quote
             </Button>
           </Toolbar>
@@ -116,6 +141,7 @@ export default function FuelQuoteGetQuote() {
                 fullWidth
                 margin="dense"
                 helperText="example) 22.5"
+                onChange={handleChange}
               ></TextField>
             </Grid>
             <Grid item xs={6}>
@@ -126,6 +152,7 @@ export default function FuelQuoteGetQuote() {
                 fullWidth
                 margin="dense"
                 helperText="Street Address, City, State, Zip Code"
+                onChange={handleChange}
               ></TextField>
             </Grid>
             <Grid item>
