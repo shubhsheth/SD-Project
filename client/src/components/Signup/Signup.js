@@ -81,6 +81,7 @@ export default function Signup() {
         }
       })
       .catch((err) => console.log(err));
+      console.log(signupInfo);
     e.preventDefault();
   };
 
