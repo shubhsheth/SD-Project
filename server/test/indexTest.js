@@ -100,7 +100,7 @@ describe("Task API", () => {
       };
       chai
         .request(server)
-        .get("/quote")
+        .get("/fuel-quote")
         .send(quote)
         .end((err, res) => {
           res.should.have.status(200);

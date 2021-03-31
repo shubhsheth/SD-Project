@@ -27,21 +27,18 @@ const authUser = (req, res, next) => {
   );
 };
 
-
 const validate = (method) => {
-  switch(method) {
-    case 'addUser': {
+  switch (method) {
+    case "addUser": {
       return [
-        check("username","Username is invalid").isAlphanumeric(),
-        body('password').isLength({ min: 4 })
-      ]
-    }
-    case 'authUser': {
-      return [
-        check("password", "Password is invalid").exists()
+        check("username", "Username is invalid").isAlphanumeric(),
+        body("password").isLength({ min: 4 }),
       ];
     }
-    case 'addUserProfile': {
+    case "authUser": {
+      return [check("password", "Password is invalid").exists()];
+    }
+    case "addUserProfile": {
       return [
         check("fullname", "Fullname is invalid").isLength({ max: 50 }),
         check("address1", "Invalid address1").isLength({ max: 50 }),
@@ -49,10 +46,10 @@ const validate = (method) => {
         check("city", "Invalid city").isLength({ max: 100 }),
         check("state", "Invalid state").isLength({ max: 2 }),
         check("zip", "Invalid zip code").isLength({ min: 5 }, { max: 9 }),
-      ]
+      ];
     }
   }
-}
+};
 
 const addUser = (req, res, next) => {
   if (!req.body.username || !req.body.password) {
@@ -86,7 +83,6 @@ const addUser = (req, res, next) => {
       }
     }
   );
-
 };
 
 const addUserProfile = (req, res, next) => {
@@ -107,13 +103,11 @@ const addUserProfile = (req, res, next) => {
       return res.sendStatus(200);
     }
   );
-
 };
-
 
 module.exports = {
   authUser,
   addUser,
   addUserProfile,
-  validate
+  validate,
 };
