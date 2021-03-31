@@ -1,4 +1,4 @@
-const { check, validationResult } = require("express-validator");
+const { body, check, validationResult } = require("express-validator");
 const md5 = require("md5");
 const db = require("../db/db");
 
@@ -26,6 +26,33 @@ const authUser = (req, res, next) => {
     }
   );
 };
+
+
+const validate = (method) => {
+  switch(method) {
+    case 'addUser': {
+      return [
+        check("username","Username is invalid").isAlphanumeric(),
+        body('password').isLength({ min: 4 })
+      ]
+    }
+    case 'authUser': {
+      return [
+        check("password", "Password is invalid").exists()
+      ];
+    }
+    case 'addUserProfile': {
+      return [
+        check("fullname", "Fullname is invalid").isLength({ max: 50 }),
+        check("address1", "Invalid address1").isLength({ max: 50 }),
+        check("address2", "Invalid address2").isLength({ max: 50 }),
+        check("city", "Invalid city").isLength({ max: 100 }),
+        check("state", "Invalid state").isLength({ max: 2 }),
+        check("zip", "Invalid zip code").isLength({ min: 5 }, { max: 9 }),
+      ]
+    }
+  }
+}
 
 const addUser = (req, res, next) => {
   if (!req.body.username || !req.body.password) {
@@ -60,12 +87,6 @@ const addUser = (req, res, next) => {
     }
   );
 
-  const errors = validationResult(req);
-  if (!errors.isEmpty()) {
-    console.log(errors);
-    return res.status(422).json({ errors: error.array() });
-  }
-  console.log(req.body);
 };
 
 const addUserProfile = (req, res, next) => {
@@ -87,42 +108,12 @@ const addUserProfile = (req, res, next) => {
     }
   );
 
-  const errors = validationResult(req);
-  if (!errors.isEmpty()) {
-    console.log(errors);
-    return res.status(422).json({ errors: error.array() });
-  }
-  console.log(req.body);
 };
 
-const authUserValidation = () => {
-  [
-    check("password", "Password is invalid")
-      .isLength({ min: 4 })
-      .equals(req.body.password),
-  ];
-};
-
-const addUserValidation = () => {
-  [check("username", "Username is invalid").isAlphanumeric()];
-};
-
-const addUserProfileValidation = () => {
-  [
-    check("fullname", "Fullname is invalid").isLength({ max: 50 }),
-    check("address1", "Invalid address1").isLength({ max: 50 }),
-    check("address2", "Invalid address2").isLength({ max: 50 }),
-    check("city", "Invalid city").isLength({ max: 100 }),
-    check("state", "Invalid state").isLength({ max: 2 }),
-    check("zip", "Invalid zip code").isLength({ min: 5 }, { max: 9 }),
-  ];
-};
 
 module.exports = {
   authUser,
   addUser,
   addUserProfile,
-  authUserValidation,
-  addUserValidation,
-  addUserProfileValidation,
+  validate
 };

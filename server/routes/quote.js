@@ -61,16 +61,16 @@ const getQuote = async (req, res) => {
   }
 };
 
-const getQuoteValidation = () => {
-  [
-    check("userId").isAlpha(),
-    check("location").isAlpha(),
-    check("gallons").isNumeric(),
-    // check("date").isDate(),
-    // check("quote").isNumeric(),
-    // check("total").isNumeric(),
-  ];
-};
+// const getQuoteValidation = () => {
+//   [
+//     check("userId").isAlpha(),
+//     check("location").isAlpha(),
+//     check("gallons").isNumeric(),
+//     // check("date").isDate(),
+//     // check("quote").isNumeric(),
+//     // check("total").isNumeric(),
+//   ];
+// };
 
 const hasHistory = (userid) => {
   db.query(
@@ -110,4 +110,8 @@ const getHistory = (req, res, next) => {
   }
 };
 
-module.exports = { getQuote, getHistory, getQuoteValidation };
+module.exports = { 
+  getQuote, 
+  getHistory, 
+  // getQuoteValidation 
+};

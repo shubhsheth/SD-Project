@@ -28,16 +28,16 @@ app.listen(process.env.PORT || "5000", () => {
 });
 
 // Login
-app.post("/login", login.authUserValidation, login.authUser);
-app.post("/signup", login.addUserValidation, login.addUser);
+app.post("/login", login.validate("authUser"), login.authUser);
+app.post("/signup", login.validate("addUser"), login.addUser);
 app.post(
   "/profile-management",
-  login.addUserProfileValidation,
+  login.validate("addUserProfile"),
   login.addUserProfile
 );
 
 // Quotes
-app.get("/quote", quote.getQuote, quote.getQuoteValidation);
+app.get("/quote", quote.getQuote);
 app.get("/fuel-history", quote.getHistory);
 
 module.exports = app;
