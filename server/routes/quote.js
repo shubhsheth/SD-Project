@@ -16,7 +16,7 @@ const getQuote = async (req, res) => {
     const time = date.getTime();
 
     let locationFactor = 0.04;
-    if (location == "Texas") {
+    if (location == "TX") {
       locationFactor = 0.02;
     }
 
@@ -66,7 +66,7 @@ const validate = (method) => {
   switch (method) {
     case "getQuote": {
       return [
-        check("userId").exists(),
+        check("userid").exists(),
         check("location").exists(),
         check("gallons").isNumeric(),
         // check("date").isDate(),
