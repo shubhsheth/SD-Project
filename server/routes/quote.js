@@ -57,7 +57,6 @@ const getQuote = async (req, res) => {
       console.log(errors);
       return res.status(422).json({ errors: errors.array() });
     }
-    console.log(req.body);
   }
 };
 
