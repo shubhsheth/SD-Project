@@ -16,7 +16,7 @@ const getQuote = async (req, res) => {
     const time = date.getTime();
 
     let locationFactor = 0.04;
-    if (location == "Texas") {
+    if (location == "TX") {
       locationFactor = 0.02;
     }
 
@@ -57,25 +57,24 @@ const getQuote = async (req, res) => {
       console.log(errors);
       return res.status(422).json({ errors: errors.array() });
     }
-    console.log(req.body);
   }
 };
 
 
-// const validate = (method) => {
-//   switch (method) {
-//     case "getQuote": {
-//       return [
-//         check("userId").exists(),
-//         check("location").isAlpha(),
-//         check("gallons").isNumeric(),
-//         // check("date").isDate(),
-//         // check("quote").isNumeric(),
-//         // check("total").isNumeric(),
-//       ];
-//     }
-//   }
-// };
+const validate = (method) => {
+  switch (method) {
+    case "getQuote": {
+      return [
+        check("userid").exists(),
+        check("location").exists(),
+        check("gallons").isNumeric(),
+        // check("date").isDate(),
+        // check("quote").isNumeric(),
+        // check("total").isNumeric(),
+      ];
+    }
+  }
+};
 
 const hasHistory = (userid) => {
   db.query(
@@ -118,5 +117,5 @@ const getHistory = (req, res, next) => {
 module.exports = {
   getQuote,
   getHistory,
-  // validate
+  validate,
 };

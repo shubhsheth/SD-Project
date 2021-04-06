@@ -69,7 +69,7 @@ describe("Task API", () => {
   describe("POST /profile-management", () => {
     it("It should update profile", (done) => {
       const user = {
-        userId: 14,
+        userId: 24,
         fullname: "z",
         address1: "test1",
         address2: "test2",
@@ -94,9 +94,9 @@ describe("Task API", () => {
   describe("GET /quote", () => {
     it("It should get quote", (done) => {
       const quote = {
-        location: "Texas",
+        location: "TX",
         gallons: 1000,
-        userid: 14,
+        userid: 24,
       };
       chai
         .request(server)
@@ -118,7 +118,7 @@ describe("Task API", () => {
   describe("GET /fuel-history", () => {
     it("It should get history", (done) => {
       const user = {
-        userid: 14,
+        userid: 24,
       };
       chai
         .request(server)
