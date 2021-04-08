@@ -12,7 +12,10 @@ import Typography from "@material-ui/core/Typography";
 import { makeStyles } from "@material-ui/core/styles";
 import Container from "@material-ui/core/Container";
 
-// import Alert from "@material-ui/lab/Alert";
+import Snackbar from "@material-ui/core/Snackbar";
+import MuiAlert from "@material-ui/lab/Alert";
+import CircularProgress from '@material-ui/core/CircularProgress';
+
 import axios from "axios";
 import { useHistory } from "react-router-dom";
 
@@ -54,8 +57,22 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
+function Alert(props) {
+  return <MuiAlert elevation={6} variant="filled" {...props} />;
+}
+
 export default function Signup() {
   const classes = useStyles();
+
+  const [open, setOpen] = React.useState(false);
+
+  const handleClose = (event, reason) => {
+    if (reason === "clickaway") {
+      return;
+    }
+
+    setOpen(false);
+  };
 
   const [signupInfo, setSignupInfo] = useState({
     username: "",
@@ -69,7 +86,9 @@ export default function Signup() {
   // const [signupError, setSignupError] = useState("");
 
   let history = useHistory();
+
   const signup = (e) => {
+    setOpen(true);
     axios
       .post("http://localhost:5000/signup", signupInfo)
       .then((res) => {
@@ -77,7 +96,9 @@ export default function Signup() {
         if (res.data.error) {
           console.log(res.data.error);
         } else {
-          history.push("/login");
+          setTimeout(() => {
+            history.push("/login");
+          }, 2000)
         }
       })
       .catch((err) => console.log(err));
@@ -145,6 +166,11 @@ export default function Signup() {
           >
             Sign Up
           </Button>
+          <Snackbar open={open} autoHideDuration={10000} onClose={handleClose}>
+            <Alert onClose={handleClose} severity="success">
+              Account Successfully Created!
+            </Alert>
+          </Snackbar>
           <Grid container>
             <Grid item>
               <Link
