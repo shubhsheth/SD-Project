@@ -94,7 +94,7 @@ const useStyles = makeStyles((theme) => ({
 export default function Home() {
   const classes = useStyles();
 
-  return (  
+  return (
     <div className={classes.root}>
       <Grid container class="section">
         <AppBar className={classes.navbar} position="absolute">
@@ -119,7 +119,14 @@ export default function Home() {
           <Typography className={classes.intro} variant="h2">
             Calculate Fuel Trip Prices Easily!
           </Typography>
-          <Button className={classes.button}>Get Started</Button>
+          <Button className={classes.button}>
+            <Link
+                href="/fuel-quote"
+                style={{ textDecoration: "none", color: "#FA9232" }}
+              >
+                Get Started
+            </Link>
+          </Button>
         </Grid>
         <Grid item>
           <img src={HomeBG} alt="" className={classes.pic}></img>
