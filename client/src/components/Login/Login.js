@@ -13,6 +13,7 @@ import { makeStyles } from '@material-ui/core/styles';
 import Logo from '../../assets/Logo.png';
 
 import axios from "axios";
+import { useHistory } from "react-router-dom";
 
 function Copyright() {
   return (
@@ -65,6 +66,7 @@ const useStyles = makeStyles((theme) => ({
 
 export default function Login() {
   const classes = useStyles();
+  let history = useHistory();
 
   const [loginCred, setLoginCred] = useState({
     username: "",
@@ -79,11 +81,18 @@ export default function Login() {
   };
 
   const login = (e) => {
-    e.preventDefault();
-    axios.post("https://sd-project.herokuapp.com/login", loginCred)
+    axios
+    .post("http://localhost:5000/login", loginCred)
     .then((res) => {
-      console.log(loginCred);
+      console.log(res.data);
+      if (res.data.error) {
+        console.log(res.data.error)
+      } else {
+        history.push("/")
+      }
     })
+    .catch((err) => console.log(err))
+    e.preventDefault();
   }
 
 
