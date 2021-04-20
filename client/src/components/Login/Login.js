@@ -82,7 +82,7 @@ export default function Login() {
 
   const login = (e) => {
     axios
-    .post("http://localhost:5000/login", loginCred)
+    .post(process.env.REACT_APP_SERVER_URL + "login", loginCred)
     .then((res) => {
       console.log(res.data);
       if (res.data.error) {

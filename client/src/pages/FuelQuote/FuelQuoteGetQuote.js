@@ -91,7 +91,7 @@ export default function FuelQuoteGetQuote() {
   const handleSubmitForm = (e) => {
     e.preventDefault();
     axios
-      .post("https://sd-project.herokuapp.com/fuel-quote", quoteForm)
+      .post(process.env.REACT_APP_SERVER_URL + "fuel-quote", quoteForm)
       .then((res) => {
         console.log(quoteForm);
       });
