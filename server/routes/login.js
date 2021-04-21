@@ -2,6 +2,8 @@ const { body, check, validationResult } = require("express-validator");
 const md5 = require("md5");
 const db = require("../db/db");
 
+let userid = ""
+
 const authUser = (req, res, next) => {
   if (!req.body.username || !req.body.password) {
     res.sendStatus(400);
@@ -19,9 +21,11 @@ const authUser = (req, res, next) => {
       }
 
       if (result.length > 0) {
-        res.send({ authentication: "true" });
+        console.log(result)
+        userid=result[0].idusers
+        res.send({ authentication: true, credentials: result[0].credentials });
       } else {
-        res.send({ authentication: "false" });
+        res.send({ authentication: false });
       }
     }
   );
@@ -70,13 +74,8 @@ const addUser = (req, res, next) => {
       if (result.length > 0) {
         return res.sendStatus(400);
       } else {
-        db.query(
-          "INSERT INTO `users` (username, password) VALUES (?, ?)",
-          [username, password],
-          (err, result, fields) => {
-            if (err) {
-              return next(new Error([err]));
-            }
+        db.query("INSERT INTO `users` (username, password) VALUES (?, ?)", [username, password], (err, result, fields) => {
+            if (err) { return next(new Error([err])); }
             return res.sendStatus(200);
           }
         );
@@ -93,14 +92,15 @@ const addUserProfile = (req, res, next) => {
   const city = req.body.city;
   const state = req.body.state;
   const zip = req.body.zip;
-
+  
+console.log(zip)
   db.query(
-    `UPDATE \`users\` SET name='${fullname}', address1='${address1}', address2='${address2}', city='${city}', state='${state}', zip='${zip}' WHERE idusers=${userId}`,
+    `UPDATE \`users\` SET name='${fullname}', address1='${address1}', address2='${address2}', city='${city}', state='${state}', zip='${zip}', credentials=1 WHERE idusers=${userid}`,
     (err, result, fields) => {
       if (err) {
         return next(new Error([err]));
       }
-      return res.sendStatus(200);
+      return res.send({ credentials: true });
     }
   );
 };

@@ -87,8 +87,15 @@ export default function Login() {
       console.log(res.data);
       if (res.data.error) {
         console.log(res.data.error)
+        
       } else {
-        history.push("/")
+        console.log(res.data.credentials);
+        if (res.data.credentials && res.data.authentication) {
+          history.push("/fuel-quote");
+        } else if (!res.data.credentials && res.data.authentication) {
+          console.log(res.data);
+          history.push("/profile-management");
+        }
       }
     })
     .catch((err) => console.log(err))
@@ -163,3 +170,4 @@ export default function Login() {
     </Grid>
   );
 }
+

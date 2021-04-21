@@ -21,7 +21,7 @@ describe("Task API", () => {
         .send(user)
         .end((err, res) => {
           res.should.have.status(200);
-          res.body.authentication.should.be.eq("true");
+          res.body.authentication.should.be.eq(true);
           done();
         });
     });
@@ -37,7 +37,7 @@ describe("Task API", () => {
         .send(user)
         .end((err, res) => {
           res.should.have.status(200);
-          res.body.authentication.should.be.eq("false");
+          res.body.authentication.should.be.eq(false);
           done();
         });
     });
