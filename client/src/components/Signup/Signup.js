@@ -90,7 +90,7 @@ export default function Signup() {
   const signup = (e) => {
     setOpen(true);
     axios
-      .post("http://localhost:5000/signup", signupInfo)
+      .post(process.env.REACT_APP_SERVER_URL + "signup", signupInfo)
       .then((res) => {
         console.log(res);
         if (res.data.error) {
@@ -98,7 +98,7 @@ export default function Signup() {
         } else {
           setTimeout(() => {
             history.push("/login");
-          }, 2000)
+          }, 2000);
         }
       })
       .catch((err) => console.log(err));
