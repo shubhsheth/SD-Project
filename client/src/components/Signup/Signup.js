@@ -14,6 +14,9 @@ import Container from "@material-ui/core/Container";
 
 import Snackbar from "@material-ui/core/Snackbar";
 import MuiAlert from "@material-ui/lab/Alert";
+import FormControl from "@material-ui/core/FormControl";
+import FormHelperText from "@material-ui/core/FormHelperText";
+
 // import CircularProgress from '@material-ui/core/CircularProgress';
 
 import axios from "axios";
@@ -121,11 +124,11 @@ export default function Signup() {
         <Typography component="h1" variant="h4" className={classes.header}>
           Sign Up
         </Typography>
-        <form className={classes.form}>
+        <FormControl className={classes.form}>
           <TextField
             variant="outlined"
             margin="normal"
-            required
+            required="true"
             fullWidth
             id="username"
             label="Username"
@@ -134,6 +137,7 @@ export default function Signup() {
             autoFocus
             onChange={handleChange}
           />
+          <FormHelperText id="my-helper-text">*Required</FormHelperText>
           <TextField
             variant="outlined"
             margin="normal"
@@ -146,17 +150,7 @@ export default function Signup() {
             autoComplete="password"
             onChange={handleChange}
           />
-          {/* <TextField
-            variant="outlined"
-            margin="normal"
-            required
-            fullWidth
-            name="confirm password"
-            label="Confirm Password"
-            type="password"
-            id="confirm password"
-            autoComplete="confirm password"
-          /> */}
+          <FormHelperText id="my-helper-text">*Required</FormHelperText>
           <Button
             type="submit"
             fullWidth
@@ -182,7 +176,7 @@ export default function Signup() {
               </Link>
             </Grid>
           </Grid>
-        </form>
+        </FormControl>
       </div>
       <Box mt={8}>
         <Copyright />

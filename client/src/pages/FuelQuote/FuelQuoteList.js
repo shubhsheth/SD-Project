@@ -27,7 +27,7 @@ export default function FuelQuoteList() {
           <p>321 Chicken, Houston, TX, 77002</p>
           {/* <button>CLICK ME</button> */}
         </VerticalTimelineElement>
-        {/* <VerticalTimelineElement
+        <VerticalTimelineElement
           className="vertical-timeline-element--work"
           contentStyle={{
             background: "#FFF",
@@ -45,7 +45,7 @@ export default function FuelQuoteList() {
             Price per gallon: $2.09
           </h3>
           <p>456 Donut Street, Houston, TX, 77002</p>
-        </VerticalTimelineElement> */}
+        </VerticalTimelineElement>
       </VerticalTimeline>
     </div>
   );
