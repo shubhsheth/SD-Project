@@ -10,7 +10,7 @@ import Typography from "@material-ui/core/Typography";
 import Button from "@material-ui/core/Button";
 import Link from "@material-ui/core/Link";
 
-import HomeBG from "../../assets/homepic.svg";
+import HomeBG from "../../assets/homepic2.svg";
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -119,14 +119,7 @@ export default function Home() {
           <Typography className={classes.intro} variant="h2">
             Calculate Fuel Trip Prices Easily!
           </Typography>
-          <Button className={classes.button}>
-            <Link
-                href="/fuel-quote"
-                style={{ textDecoration: "none", color: "#FA9232" }}
-              >
-                Get Started
-            </Link>
-          </Button>
+
         </Grid>
         <Grid item>
           <img src={HomeBG} alt="" className={classes.pic}></img>
