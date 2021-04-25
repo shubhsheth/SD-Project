@@ -134,7 +134,6 @@ export default function ProfileManagement() {
           <TextField
             variant="outlined"
             margin="normal"
-            required
             fullWidth
             name="address2"
             label="Address 2"
