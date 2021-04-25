@@ -59,11 +59,11 @@ export default function ProfileManagement() {
   const [profileCred, setProfileCred] = useState({
     fullname: "",
     address1: "",
-	address2: "",
-	city: "",
-	state: "",
-	zip: "",
-  });
+	  address2: "",
+	  city: "",
+	  state: "",
+	  zip: "",
+    });
 
     const handleChange = (e) => {
       setProfileCred({

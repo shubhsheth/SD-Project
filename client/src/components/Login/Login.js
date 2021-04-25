@@ -64,7 +64,7 @@ const useStyles = makeStyles((theme) => ({
 }
 }));
 
-export default function Login() {
+export default function Login({setUserId}) {
   const classes = useStyles();
   let history = useHistory();
 
@@ -85,6 +85,8 @@ export default function Login() {
     .post(process.env.REACT_APP_SERVER_URL + "login", loginCred)
     .then((res) => {
       console.log(res.data);
+      // setUserId();
+      setUserId(res.data.userid);
       if (res.data.error) {
         console.log(res.data.error)
         

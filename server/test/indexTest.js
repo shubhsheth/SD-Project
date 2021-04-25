@@ -91,7 +91,7 @@ describe("Task API", () => {
   /**
    * Get Quote
    */
-  describe("GET /quote", () => {
+  describe("POST /quote", () => {
     it("It should get quote", (done) => {
       const quote = {
         location: "TX",
@@ -100,7 +100,7 @@ describe("Task API", () => {
       };
       chai
         .request(server)
-        .get("/quote")
+        .post("/quote")
         .send(quote)
         .end((err, res) => {
           res.should.have.status(200);
@@ -115,14 +115,14 @@ describe("Task API", () => {
   /**
    * Get Quote History
    */
-  describe("GET /fuel-history", () => {
+  describe("POST /fuel-history", () => {
     it("It should get history", (done) => {
       const user = {
         userid: 24,
       };
       chai
         .request(server)
-        .get("/fuel-history")
+        .post("/fuel-history")
         .send(user)
         .end((err, res) => {
           res.should.have.status(200);

@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import "./App.css";
 // import Navbar from "./components/NavBar/Navbar";
 import Home from "./pages/Home/Home";
@@ -10,12 +10,19 @@ import FuelHistory from "./pages/FuelHistory/FuelHistory";
 import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
 
 function App() {
+  const [userId, setUserId] = useState(null);
+  console.log(userId);
+
+  const handleUserId = (userId) => {
+    setUserId(userId);
+  }
+
   return (
     <Router>
       <div>
         <Switch>
           <Route path="/login">
-            <Login />
+            <Login setUserId={handleUserId} />
           </Route>
           <Route path="/signup">
             <Signup />
@@ -24,7 +31,7 @@ function App() {
             <ProfileManagement />
           </Route>
           <Route path="/fuel-quote">
-            <FuelQuote />
+            <FuelQuote userId={userId}/>
           </Route>
           <Route path="/fuel-history">
             <FuelHistory />

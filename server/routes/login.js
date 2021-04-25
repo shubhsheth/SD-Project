@@ -5,9 +5,7 @@ const db = require("../db/db");
 let userid = ""
 
 const authUser = (req, res, next) => {
-  if (!req.body.username || !req.body.password) {
-    res.sendStatus(400);
-  }
+  if (!req.body.username || !req.body.password) { res.sendStatus(400); }
 
   const username = req.body.username;
   const password = md5(req.body.password);
@@ -23,7 +21,7 @@ const authUser = (req, res, next) => {
       if (result.length > 0) {
         console.log(result)
         userid=result[0].idusers
-        res.send({ authentication: true, credentials: result[0].credentials });
+        res.send({ authentication: true, credentials: result[0].credentials, userid: result[0].idusers });
       } else {
         res.send({ authentication: false });
       }

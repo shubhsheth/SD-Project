@@ -37,7 +37,7 @@ app.post(
 );
 
 // Quotes
-app.get("/quote", quote.validate('getQuote'), quote.getQuote);
-app.get("/fuel-history", quote.getHistory);
+app.post("/quote", quote.validate('getQuote'), quote.getQuote);
+app.post("/fuel-history", quote.getHistory);
 
 module.exports = app;
