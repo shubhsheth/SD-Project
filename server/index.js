@@ -30,11 +30,7 @@ app.listen(process.env.PORT || "5000", () => {
 // Login
 app.post("/login", login.validate("authUser"), login.authUser);
 app.post("/signup", login.validate("addUser"), login.addUser);
-app.post(
-  "/profile-management",
-  login.validate("addUserProfile"),
-  login.addUserProfile
-);
+app.post("/profile-management", login.validate("addUserProfile"), login.addUserProfile);
 
 // Quotes
 app.post("/quote", quote.validate('getQuote'), quote.getQuote);

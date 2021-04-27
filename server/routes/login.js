@@ -4,8 +4,87 @@ const db = require("../db/db");
 
 let userid = ""
 
+
+const validate = (method) => {
+  switch (method) {
+    case "addUser": {
+      return [
+        check("username")
+          .exists()
+          .not()
+          .isEmpty()
+          .isAlphanumeric()
+          .withMessage("Bad Request"),
+        check("password")
+          .exists()
+          .not()
+          .isEmpty()
+          .isLength({ min: 4 })
+          .withMessage("Bad Request")
+      ];
+    }
+    case "authUser": {
+      return [
+        check("password")
+          .exists()
+          .not()
+          .isEmpty()
+          .withMessage("Bad Request")
+      ]
+    }
+    case "addUserProfile": {
+      return [
+        check("userId")
+          .exists()
+          .not()
+          .isEmpty()
+          .withMessage('Bad Request'),
+        check("fullname")
+          .exists()
+          .not()
+          .isEmpty()
+          .isLength({ max: 50 })
+          .withMessage("Fullname is invalid"),
+        check("address1")
+          .exists()
+          .not()
+          .isEmpty()
+          .isLength({ max: 50 })
+          .withMessage("Invalid address1"),
+        check("address2")
+          .exists()
+          .not()
+          .isEmpty()
+          .isLength({ max: 50 })
+          .withMessage("Invalid address2"),
+        check("city")
+          .exists()
+          .not()
+          .isEmpty()
+          .isLength({ max: 100 })
+          .withMessage("Invalid city"),
+        check("state")
+          .exists()
+          .not()
+          .isEmpty()
+          .isLength({ max: 2 })
+          .withMessage("Invalid state"),
+        check("zip")
+          .exists()
+          .not()
+          .isEmpty()
+          .isLength({ min: 5 }, { max: 9 })
+          .withMessage("Invalid zip code")
+      ];
+    }
+  }
+};
+
 const authUser = (req, res, next) => {
-  if (!req.body.username || !req.body.password) { res.sendStatus(400); }
+  const errors = validationResult(req);
+  if (!errors.isEmpty()) {
+    return res.status(400).json({ errors: errors.array() });
+  }
 
   const username = req.body.username;
   const password = md5(req.body.password);
@@ -19,7 +98,6 @@ const authUser = (req, res, next) => {
       }
 
       if (result.length > 0) {
-        console.log(result)
         userid=result[0].idusers
         res.send({ authentication: true, credentials: result[0].credentials, userid: result[0].idusers });
       } else {
@@ -29,33 +107,10 @@ const authUser = (req, res, next) => {
   );
 };
 
-const validate = (method) => {
-  switch (method) {
-    case "addUser": {
-      return [
-        check("username", "Username is invalid").isAlphanumeric(),
-        body("password").isLength({ min: 4 }),
-      ];
-    }
-    case "authUser": {
-      return [check("password", "Password is invalid").exists()];
-    }
-    case "addUserProfile": {
-      return [
-        check("fullname", "Fullname is invalid").isLength({ max: 50 }),
-        check("address1", "Invalid address1").isLength({ max: 50 }),
-        check("address2", "Invalid address2").isLength({ max: 50 }),
-        check("city", "Invalid city").isLength({ max: 100 }),
-        check("state", "Invalid state").isLength({ max: 2 }),
-        check("zip", "Invalid zip code").isLength({ min: 5 }, { max: 9 }),
-      ];
-    }
-  }
-};
-
 const addUser = (req, res, next) => {
-  if (!req.body.username || !req.body.password) {
-    res.sendStatus(400);
+  const errors = validationResult(req);
+  if (!errors.isEmpty()) {
+    return res.status(400).json({ errors: errors.array() });
   }
 
   const username = req.body.username;
@@ -83,6 +138,11 @@ const addUser = (req, res, next) => {
 };
 
 const addUserProfile = (req, res, next) => {
+  const errors = validationResult(req);
+  if (!errors.isEmpty()) {
+    return res.status(400).json({ errors: errors.array() });
+  }
+
   const userId = req.body.userId;
   const fullname = req.body.fullname;
   const address1 = req.body.address1;
@@ -90,15 +150,16 @@ const addUserProfile = (req, res, next) => {
   const city = req.body.city;
   const state = req.body.state;
   const zip = req.body.zip;
-  
-console.log(zip)
+
   db.query(
-    `UPDATE \`users\` SET name='${fullname}', address1='${address1}', address2='${address2}', city='${city}', state='${state}', zip='${zip}', credentials=1 WHERE idusers=${userid}`,
+    `UPDATE \`users\` SET name='${fullname}', address1='${address1}', address2='${address2}', city='${city}', state='${state}', zip='${zip}', credentials=1 WHERE idusers=${userId}`,
     (err, result, fields) => {
       if (err) {
-        return next(new Error([err]));
+        next(new Error([err]));
+        return res.sendStatus(400);
+      } else {
+        return res.send({ credentials: true });
       }
-      return res.send({ credentials: true });
     }
   );
 };

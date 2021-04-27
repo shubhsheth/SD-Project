@@ -74,7 +74,7 @@ describe("Task API", () => {
         address1: "test1",
         address2: "test2",
         city: "test3",
-        state: "test4",
+        state: "TX",
         zip: "test5",
       };
       chai

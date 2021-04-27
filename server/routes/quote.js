@@ -21,7 +21,73 @@ const hasHistory = (userid) => new Promise(
   }
 );
 
+const validate = (method) => {
+  switch (method) {
+    case "getQuote": {
+      return [
+        check("userid")
+          .exists()
+          .not()
+          .isEmpty()
+          .withMessage('Bad Request'),
+        check("location")
+          .exists()
+          .not()
+          .isEmpty()
+          .withMessage('Bad Request'),
+        check("gallons")
+          .exists()
+          .not()
+          .isEmpty()
+          .isNumeric()
+          .withMessage('Bad Request')
+      ];
+    }
+    case "saveQuote": {
+      return [
+        check("userid")
+          .exists()
+          .not()
+          .isEmpty()
+          .withMessage('Bad Request'),
+
+        check("location")
+          .exists()
+          .not()
+          .isEmpty()
+          .withMessage('Bad Request'),
+
+        check("gallons")
+          .exists()
+          .not()
+          .isEmpty()
+          .withMessage('Bad Request'),
+
+        check("quote")
+          .exists()
+          .not()
+          .isEmpty()
+          .withMessage('Bad Request')
+      ]
+    }
+    case "getHistory": {
+      return [
+        check("userid")
+          .exists()
+          .not()
+          .isEmpty()
+          .withMessage("Bad Request")
+      ]
+    }
+  }
+};
+
 const getQuote = async (req, res) => {
+  const errors = validationResult(req);
+  if (!errors.isEmpty()) {
+    return res.status(400).json({ errors: errors.array() });
+  }
+
   const currentPrice = 1.5;
   const profitFactor = 0.1;
 
@@ -57,57 +123,16 @@ const getQuote = async (req, res) => {
     const quote = currentPrice + margin;
     const total = gallons * quote;
     return res.send({ margin, quote, total });
-
-
-    const errors = validationResult(req);
-    if (!errors.isEmpty()) { return res.status(422).json({ errors: errors.array() }); }
   }
 };
 
-
-const validate = (method) => {
-  switch (method) {
-    case "getQuote": {
-      return [
-        check("userid").exists(),
-        check("location").exists(),
-        check("gallons").isNumeric(),
-        // check("date").isDate(),
-        // check("quote").isNumeric(),
-        // check("total").isNumeric(),
-      ];
-    }
-    case "saveQuote": {
-      return [
-        check("userid")
-          .exists()
-          .not()
-          .isEmpty()
-          .withMessage('Bad Request'),
-
-        check("location")
-          .exists()
-          .not()
-          .isEmpty()
-          .withMessage('Bad Request'),
-
-        check("gallons")
-          .exists()
-          .not()
-          .isEmpty()
-          .withMessage('Bad Request'),
-
-        check("quote")
-          .exists()
-          .not()
-          .isEmpty()
-          .withMessage('Bad Request')
-      ]
-    }
-  }
-};
 
 const getHistory = (req, res, next) => {
+  const errors = validationResult(req);
+  if (!errors.isEmpty()) {
+    return res.status(400).json({ errors: errors.array() });
+  }
+  
   const userid = req.body.userid;
 
   if (!userid) {
@@ -132,9 +157,9 @@ const saveQuote = (req, res, next) => {
 
   const errors = validationResult(req);
   if (!errors.isEmpty()) {
-    return res.status(500).json({ errors: errors.array() });
+    return res.status(400).json({ errors: errors.array() });
   }
-  
+
   const date = new Date();
   const time = date.getTime();
   const userid = req.body.userid;
