@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { makeStyles } from '@material-ui/core/styles';
 import Table from '@material-ui/core/Table';
 import TableBody from '@material-ui/core/TableBody';
@@ -28,24 +28,27 @@ function createData( quoteID, gallons, address, date, price, total ) {
     date,
     price,
     total,
-    history: [
-      { date: '2020-01-05', customerId: '11091700', amount: 3 },
-      { date: '2020-01-02', customerId: 'Anonymous', amount: 1 },
-    ],
   };
 }
+
+
 
 function Row(props) {
   const { row } = props;
   const classes = useRowStyles();
 
+  // const [quoteHistory, setQuoteHistory] = useState({
+  //   location: "",
+  //   gallons: "",
+  //   date: "",
+  //   quote: "",
+  //   total: "",
+  // })
+
   return (
     <React.Fragment>
       <TableRow className={classes.root}>
-        <TableCell>
-
-        </TableCell>
-        <TableCell component="th" scope="row">
+        <TableCell align="right" component="th" scope="row">
           {row.quoteID}
         </TableCell>
         <TableCell align="right">{row.gallons}</TableCell>
@@ -60,12 +63,11 @@ function Row(props) {
 
 
 const rows = [
-  createData('1', 15, "321 Chicken Street, Houston TX 77002", "2/15/2021", 2.98, 44.70),
-  createData('2', 12, "321 Donut Street, Houston TX 77001", "2/12/2021", 2.61, 36.7),
-  createData('3', 15, "961 Milam Street, Houston TX 77001", "2/13/2021", 2.12, 47.8),
-  createData('4', 19, "616 Travis Rd, Houston TX 77001", "2/15/2021", 2.62, 41.8),
-  createData('5', 10, "12 Houston Rd, Houston TX 77001", "2/17/2021", 2.29, 41.8),
-
+  createData("1", 15, "TX", "2/15/2021", 2.98, 44.7),
+  createData("2", 12, "CA", "2/12/2021", 2.61, 36.7),
+  createData("3", 15, "VA", "2/13/2021", 2.12, 47.8),
+  createData("4", 19, "MS", "2/15/2021", 2.62, 41.8),
+  createData("5", 10, "LA", "2/17/2021", 2.29, 41.8),
 ];
 
 export default function FuelHistory() {
@@ -75,8 +77,7 @@ export default function FuelHistory() {
       <Table aria-label="collapsible table">
         <TableHead>
           <TableRow>
-            <TableCell />
-            <TableCell>Quote ID</TableCell>
+            <TableCell align="right">Quote ID</TableCell>
             <TableCell align="right">Gallons Requested</TableCell>
             <TableCell align="right">Delivery State</TableCell>
             <TableCell align="right">Delivery Date</TableCell>
