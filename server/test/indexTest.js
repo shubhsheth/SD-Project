@@ -110,6 +110,54 @@ describe("Task API", () => {
           done();
         });
     });
+
+    it("It should fail to get quote", (done) => {
+      const quote = {
+        gallons: 1000,
+        userid: 24,
+      };
+      chai
+        .request(server)
+        .post("/quote")
+        .send(quote)
+        .end((err, res) => {
+          res.body.errors.length.should.be.above(0);
+          res.should.have.status(400);
+          done();
+        });
+    });
+
+    it("It should fail to get quote", (done) => {
+      const quote = {
+        location: "TX",
+        userid: 24,
+      };
+      chai
+        .request(server)
+        .post("/quote")
+        .send(quote)
+        .end((err, res) => {
+          res.body.errors.length.should.be.above(0);
+          res.should.have.status(400);
+          done();
+        });
+    });
+
+    it("It should fail to get quote", (done) => {
+      const quote = {
+        location: "TX",
+        gallons: 1000,
+      };
+      chai
+        .request(server)
+        .post("/quote")
+        .send(quote)
+        .end((err, res) => {
+          res.body.errors.length.should.be.above(0);
+          res.should.have.status(400);
+          done();
+        });
+    });
   });
 
   /**
@@ -127,6 +175,92 @@ describe("Task API", () => {
         .end((err, res) => {
           res.should.have.status(200);
           res.body.length.should.be.above(0);
+          done();
+        });
+    });
+
+    it("It should not get history", (done) => {
+      const user = {};
+      chai
+        .request(server)
+        .post("/fuel-history")
+        .send(user)
+        .end((err, res) => {
+          res.should.have.status(400);
+          done();
+        });
+    });
+  });
+
+
+  /**
+   * Save to Quote History
+   */
+  describe("POST /save-quote", () => {
+    it("It should save history", (done) => {
+      const user = {
+        "location": "TX",
+        "gallons": 1000,
+        "userid": 34,
+        "quote": 11
+      };
+      chai
+        .request(server)
+        .post("/save-quote")
+        .send(user)
+        .end((err, res) => {
+          res.should.have.status(200);
+          done();
+        });
+    });
+
+    it("It should not save history", (done) => {
+      const user = {
+        "gallons": 1000,
+        "userid": 34,
+        "quote": 11
+      };
+      chai
+        .request(server)
+        .post("/save-quote")
+        .send(user)
+        .end((err, res) => {
+          res.body.errors.length.should.be.above(0);
+          res.should.have.status(400);
+          done();
+        });
+    });
+
+    it("It should not save history", (done) => {
+      const user = {
+        "location": "TX",
+        "userid": 34,
+        "quote": 11
+      };
+      chai
+        .request(server)
+        .post("/save-quote")
+        .send(user)
+        .end((err, res) => {
+          res.body.errors.length.should.be.above(0);
+          res.should.have.status(400);
+          done();
+        });
+    });
+
+    it("It should not save history", (done) => {
+      const user = {
+        "location": "TX",
+        "gallons": 1000,
+        "quote": 11
+      };
+      chai
+        .request(server)
+        .post("/save-quote")
+        .send(user)
+        .end((err, res) => {
+          res.body.errors.length.should.be.above(0);
+          res.should.have.status(400);
           done();
         });
     });
