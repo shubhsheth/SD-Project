@@ -1,6 +1,26 @@
 const { check, validationResult } = require("express-validator");
 const db = require("../db/db");
 
+const hasHistory = (userid) => new Promise(
+  (resolve, reject) => {
+    db.query(
+      "SELECT * FROM `quotes` WHERE idusers = ?",
+      userid,
+      (err, result, fields) => {
+        if (err) {
+          reject(false);
+        }
+
+        if (result.length > 0) {
+          resolve(true);
+        } else {
+          resolve(false);
+        }
+      }
+    );
+  }
+);
+
 const getQuote = async (req, res) => {
   const currentPrice = 1.5;
   const profitFactor = 0.1;
@@ -20,8 +40,8 @@ const getQuote = async (req, res) => {
       locationFactor = 0.02;
     }
 
-    // TODO: Bug - await doesn't work properly
-    let rateHistoryFactor = (await hasHistory(userid)) == true ? 0.01 : 0;
+    let userHasHistory = await hasHistory(userid);
+    let rateHistoryFactor = (userHasHistory) ? 0.01 : 0;
 
     let gallonRequestedFactor = 0.03;
     if (gallons > 1000) {
@@ -71,24 +91,6 @@ const validate = (method) => {
       ];
     }
   }
-};
-
-const hasHistory = (userid) => {
-  db.query(
-    "SELECT * FROM `quotes` WHERE idusers = ?",
-    userid,
-    (err, result, fields) => {
-      if (err) {
-        return false;
-      }
-
-      if (result.length > 0) {
-        return true;
-      } else {
-        return false;
-      }
-    }
-  );
 };
 
 const getHistory = (req, res, next) => {

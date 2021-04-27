@@ -104,9 +104,9 @@ describe("Task API", () => {
         .send(quote)
         .end((err, res) => {
           res.should.have.status(200);
-          res.body.margin.should.be.eq(0.225);
-          res.body.quote.should.be.eq(1.725);
-          res.body.total.should.be.eq(1725);
+          res.body.margin.should.be.eq(0.21);
+          res.body.quote.should.be.eq(1.71);
+          res.body.total.should.be.eq(1710);
           done();
         });
     });
