@@ -32,9 +32,6 @@ const getQuote = async (req, res) => {
     const location = req.body.location;
     const gallons = req.body.gallons;
 
-    const date = new Date();
-    const time = date.getTime();
-
     let locationFactor = 0.04;
     if (location == "TX") {
       locationFactor = 0.02;
@@ -59,18 +56,8 @@ const getQuote = async (req, res) => {
     );
     const quote = currentPrice + margin;
     const total = gallons * quote;
+    return res.send({ margin, quote, total });
 
-    db.query(
-      "INSERT INTO `quotes` (idusers, gallons, address, date, price, total) VALUES (?, ?, ?, ?, ?, ?)",
-      [userid, gallons, location, time, quote, total],
-      (err, result, fields) => {
-        if (err) {
-          return next(new Error([err]));
-        }
-
-        return res.send({ margin, quote, total });
-      }
-    );
 
     const errors = validationResult(req);
     if (!errors.isEmpty()) { return res.status(422).json({ errors: errors.array() }); }
@@ -89,6 +76,33 @@ const validate = (method) => {
         // check("quote").isNumeric(),
         // check("total").isNumeric(),
       ];
+    }
+    case "saveQuote": {
+      return [
+        check("userid")
+          .exists()
+          .not()
+          .isEmpty()
+          .withMessage('Bad Request'),
+
+        check("location")
+          .exists()
+          .not()
+          .isEmpty()
+          .withMessage('Bad Request'),
+
+        check("gallons")
+          .exists()
+          .not()
+          .isEmpty()
+          .withMessage('Bad Request'),
+
+        check("quote")
+          .exists()
+          .not()
+          .isEmpty()
+          .withMessage('Bad Request')
+      ]
     }
   }
 };
@@ -113,8 +127,40 @@ const getHistory = (req, res, next) => {
   }
 };
 
+
+const saveQuote = (req, res, next) => {
+
+  const errors = validationResult(req);
+  if (!errors.isEmpty()) {
+    return res.status(500).json({ errors: errors.array() });
+  }
+  
+  const date = new Date();
+  const time = date.getTime();
+  const userid = req.body.userid;
+  const location = req.body.location;
+  const gallons = req.body.gallons;
+  const quote = req.body.quote;
+  const total = gallons * quote;
+
+  db.query(
+    "INSERT INTO `quotes` (idusers, gallons, address, date, price, total) VALUES (?, ?, ?, ?, ?, ?)",
+    [userid, gallons, location, time, quote, total],
+    (err, result, fields) => {
+      if (err) {
+        next(new Error([err]));
+        return res.sendStatus(400);
+      } else {
+        return res.sendStatus(200);
+      }
+    }
+  );
+}
+
+
 module.exports = {
   getQuote,
   getHistory,
+  saveQuote,
   validate,
 };

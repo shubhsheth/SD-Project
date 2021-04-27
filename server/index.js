@@ -38,6 +38,7 @@ app.post(
 
 // Quotes
 app.post("/quote", quote.validate('getQuote'), quote.getQuote);
+app.post("/save-quote", quote.validate('saveQuote'), quote.saveQuote);
 app.post("/fuel-history", quote.getHistory);
 
 module.exports = app;
