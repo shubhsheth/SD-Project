@@ -153,11 +153,7 @@ export default function Login() {
               Sign In
             </Button>
             <Grid container>
-              <Grid item xs>
-                <Link href="#" variant="body2" style={{textDecoration: "none", color: "black"}}>
-                  Forgot password?
-                </Link>
-              </Grid>
+              
               <Grid item>
                 <Link href="/signup" variant="body2" style={{textDecoration: "none", color: "black"}}>
                   {"Don't have an account? Sign Up"}
