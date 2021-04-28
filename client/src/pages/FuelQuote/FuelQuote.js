@@ -19,7 +19,7 @@ const useStyles = makeStyles((theme) => ({
   section: {
     position: "relative",
     width: "100%",
-    height: "100%",
+    height: "100vh",
     background: "linear-gradient(45deg, #1493ce, #ff0057)",
     display: "flex",
     justifyContent: "center",

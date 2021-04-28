@@ -64,7 +64,7 @@ const useStyles = makeStyles((theme) => ({
 }
 }));
 
-export default function Login({setUserId}) {
+export default function Login() {
   const classes = useStyles();
   let history = useHistory();
 
@@ -85,15 +85,14 @@ export default function Login({setUserId}) {
     .post(process.env.REACT_APP_SERVER_URL + "login", loginCred)
     .then((res) => {
       console.log(res.data);
-      // setUserId();
-      setUserId(res.data.userid);
       if (res.data.error) {
         console.log(res.data.error)
-        
       } else {
         console.log(res.data.credentials);
         if (res.data.credentials && res.data.authentication) {
+          
           history.push("/fuel-quote");
+          localStorage.setItem("userid", res.data.userid);
         } else if (!res.data.credentials && res.data.authentication) {
           console.log(res.data);
           history.push("/profile-management");
