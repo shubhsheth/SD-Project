@@ -74,7 +74,15 @@ export default function ProfileManagement() {
 
 	  const save = (e) => {
       axios
-        .post(process.env.REACT_APP_SERVER_URL + "profile-management", profileCred)
+        .post(process.env.REACT_APP_SERVER_URL + "profile-management", {
+          userId: localStorage.getItem("userid"),
+          fullname: profileCred.fullname,
+          address1: profileCred.address1,
+          address2: profileCred.address2,
+          city: profileCred.city,
+          state: profileCred.state,
+          zip: profileCred.zip,
+        })
         .then((res) => {
           console.log(res.data);
           if (res.data.error) {
@@ -82,6 +90,15 @@ export default function ProfileManagement() {
           } else {
             console.log(res.data.credentials);
             if (res.data.credentials) {
+              setProfileCred({
+                fullname: res.data.fullname,
+                address1: res.data.address1,
+                address2: res.data.address2,
+                city: res.data.city,
+                state: res.data.state,
+                zip: res.data.zip,
+                credentials: res.data.credentials
+              });
               history.push("/fuel-quote");
             } else if (!res.data.credentials) {
               console.log(res.data);
