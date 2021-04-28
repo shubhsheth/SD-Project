@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState } from "react";
 import { makeStyles } from "@material-ui/core/styles";
 import Button from "@material-ui/core/Button";
 import Dialog from "@material-ui/core/Dialog";
@@ -61,8 +61,8 @@ const useStyles = makeStyles((theme) => ({
     height: "30rem",
   },
   buttonGet: {
-    background: "#000000",
-    color: "#FFB800",
+    background: "#c9c9c9",
+    color: "#000000",
     width: "10rem",
     borderRadius: "10px",
     "&:hover, &.Mui-focusVisible": {
@@ -75,8 +75,8 @@ const useStyles = makeStyles((theme) => ({
     marginTop: theme.spacing(3),
   },
   buttonSubmit: {
-    background: "#000000",
-    color: "#FFB800",
+    background: "#c9c9c9",
+    color: "#000000",
     width: "10rem",
     borderRadius: "10px",
     "&:hover, &.Mui-focusVisible": {
@@ -87,6 +87,7 @@ const useStyles = makeStyles((theme) => ({
     fontFamily: "Oleo Script",
     fontSize: "18px",
     marginTop: theme.spacing(3),
+    marginLeft: theme.spacing(3)
   },
 }));
 
@@ -96,7 +97,6 @@ const Transition = React.forwardRef(function Transition(props, ref) {
 
 export default function FuelQuoteGetQuote({userId}) {
   const classes = useStyles();
-  const [btnDisabled, setBtnDisabled] = useState(true)
 
   const usStates = [
     "AL",
@@ -168,27 +168,34 @@ export default function FuelQuoteGetQuote({userId}) {
     location: "",
   });
 
+  const [btnDisabled, setBtnDisabled] = useState(true);
+
+  const enabled = quoteForm.gallons.length > 0 && quoteForm.location.length > 0;
+
   const [showCalculation, setShowCalculation] = useState(false);
-  const [suggestedPrice, setSuggestedPrice] = useState(null);
-  const [totalPrice, setTotalPrice] = useState(null);
-  const [userId2, setUserId2] = useState(null);
+  // const [suggestedPrice, setSuggestedPrice] = useState(null);
+  // const [totalPrice, setTotalPrice] = useState(null);
+  // const [userId2, setUserId2] = useState(null);
+  const [getQuote, setGetQuote] = useState({
+    quote: "",
+    total: "",
+  }) 
 
-  useEffect(() => {
-    setUserId2(userId);
-    
-  }, [])
 
-  console.log(userId2);
+  // useEffect(() => {
+  //   setUserId2(userId);
+  // }, []);
 
   const handleChange = (e) => {
     setQuoteForm({
       ...quoteForm,
       [e.target.name]: e.target.value,
-    }) 
-    setBtnDisabled(!e.target.value)
-    ;
-    console.log(quoteForm);
+    });
   };
+
+  // const handleClickEnableSubmit = () => {
+  //   setBtnDisabled(false)
+  // }
 
   //opening the quote form
   const handleClickOpen = () => {
@@ -200,60 +207,56 @@ export default function FuelQuoteGetQuote({userId}) {
     setOpen(false);
   };
 
-  const getQuoteCalculation = () => {
+  const getQuoteCalculation = (e) => {
+    e.preventDefault();
     console.log(quoteForm);
-    setShowCalculation(true);
-    const currentPrice = 1.5;
-    const profitFactor = 0.1;
-
-    let locationFactor = 0.04;
-    if (quoteForm.location === "TX") {
-      locationFactor = 0.02;
-    }
-
-    // TODO: Bug - await doesn't work properly
-   
-
-    let gallonRequestedFactor = 0.03;
-    if (quoteForm.gallons > 1000) {
-      gallonRequestedFactor = 0.02;
-    }
-
-    const margin = Number(
-      (
-        currentPrice *
-        (locationFactor +
-          gallonRequestedFactor +
-          profitFactor)
-      ).toFixed(4)
-    );
-    const quote = currentPrice + margin;
-    const total = quoteForm.gallons * quote;
-
-    console.log(quote);
-    console.log(total);
-
-    setSuggestedPrice(quote);
-    setTotalPrice(total);
-  }
+    axios
+      .post(process.env.REACT_APP_SERVER_URL + "quote", {
+        userid: localStorage.getItem("userid"),
+        location: quoteForm.location,
+        gallons: quoteForm.gallons
+      })
+        .then((res) => {
+          setShowCalculation(true);
+          // setSuggestedPrice(quote);
+          // setTotalPrice(total);
+          setBtnDisabled(false);
+          console.log(res.data)
+          setGetQuote({
+            quote: res.data.quote,
+            total: res.data.total
+          });
+          // localStorage.setItem("userid", res.data.userid);
+        })
+  };
 
   //submitting the quote form
   const submitForm = (e) => {
     e.preventDefault();
     console.log(quoteForm);
     axios
-      .post(process.env.REACT_APP_SERVER_URL + "quote", {...quoteForm, userid: userId2})
+      .post(process.env.REACT_APP_SERVER_URL + "save-quote", {
+        userid: localStorage.getItem("userid"),
+        location: quoteForm.location,
+        gallons: quoteForm.gallons,
+        quote: getQuote.quote,
+        total: getQuote.total
+      })
       .then((res) => {
         console.log(res.data);
         console.log(quoteForm);
         if (res.data.error) {
           console.log(res.data.error);
         } else {
-          history.push("/fuel-history")
+          setGetQuote({
+            quote: res.data.quote,
+            total: res.data.total,
+          });
+          history.push("/fuel-history");
         }
       })
       .catch((err) => console.log(err));
-  }; 
+  };
 
   return (
     <div>
@@ -330,41 +333,39 @@ export default function FuelQuoteGetQuote({userId}) {
                     </TextField>
                   </Grid>
                   <Grid item>
-                    {/* <form className={classes.container} noValidate>
-                      <TextField
-                        name="date"
-                        id="date"
-                        label="Select Delivery Date *"
-                        type="date"
-                        defaultValue="2021-02-15"
-                        className={classes.textField}
-                        InputLabelProps={{
-                          shrink: true,
-                        }}
-                        margin="dense"
-                      />
-                    </form> */}
-                  </Grid>
-                  <Grid item>
                     <List>
                       <ListItem button>
                         <ListItemText
                           primary="Suggested Price per Gallon"
-                          secondary={showCalculation ? `$${suggestedPrice}` : "-"}
+                          secondary={
+                            
+                            showCalculation ? `$${getQuote.quote}` : "-"
+                          
+                          }
                         />
                       </ListItem>
                       <Divider />
                       <ListItem button>
                         <ListItemText
                           primary="Total Amount Due"
-                          secondary={showCalculation ? `$${totalPrice}` : "-"}
+                          secondary={showCalculation ? `$${getQuote.total}` : "-"}
                         />
                       </ListItem>
                     </List>
                   </Grid>
                   <Grid item>
-                    <Button disabled={btnDisabled} className={classes.buttonGet} onClick={getQuoteCalculation}>Get Quote</Button>
-                    <Button className={classes.buttonSubmit} onClick={submitForm}>
+                    <Button
+                      disabled={!enabled}
+                      className={classes.buttonGet}
+                      onClick={getQuoteCalculation}
+                    >
+                      Get Quote
+                    </Button>
+                    <Button
+                      disabled={btnDisabled}
+                      className={classes.buttonSubmit}
+                      onClick={submitForm}
+                    >
                       Submit
                     </Button>
                   </Grid>

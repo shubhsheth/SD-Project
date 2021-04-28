@@ -11,7 +11,8 @@ import Link from "@material-ui/core/Link";
 
 const useStyles = makeStyles((theme) => ({
   root: {
-      background: "linear-gradient(45deg, #1493ce, #ff0057)",
+    background: "linear-gradient(45deg, #1493ce, #ff0057)",
+    height: "100vh"
   },
   title: {
     flexGrow: 1,
