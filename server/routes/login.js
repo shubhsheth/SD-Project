@@ -53,8 +53,6 @@ const validate = (method) => {
           .withMessage("Invalid address1"),
         check("address2")
           .exists()
-          .not()
-          .isEmpty()
           .isLength({ max: 50 })
           .withMessage("Invalid address2"),
         check("city")
