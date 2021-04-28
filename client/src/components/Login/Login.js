@@ -82,24 +82,26 @@ export default function Login() {
 
   const login = (e) => {
     axios
-    .post(process.env.REACT_APP_SERVER_URL + "login", loginCred)
-    .then((res) => {
-      console.log(res.data);
-      if (res.data.error) {
-        console.log(res.data.error)
-      } else {
-        console.log(res.data.credentials);
-        if (res.data.credentials && res.data.authentication) {
-          
-          history.push("/fuel-quote");
-          localStorage.setItem("userid", res.data.userid);
-        } else if (!res.data.credentials && res.data.authentication) {
-          console.log(res.data);
-          history.push("/profile-management");
+      .post(process.env.REACT_APP_SERVER_URL + "login", {
+        username: loginCred.username,
+        password: loginCred.password,
+      })
+      .then((res) => {
+        localStorage.setItem("userid", res.data.userid);
+        console.log(res.data);
+        if (res.data.error) {
+          console.log(res.data.error);
+        } else {
+          console.log(res.data.credentials);
+          if (res.data.credentials && res.data.authentication) {
+            history.push("/fuel-quote");
+          } else if (!res.data.credentials && res.data.authentication) {
+            console.log(res.data);
+            history.push("/profile-management");
+          }
         }
-      }
-    })
-    .catch((err) => console.log(err))
+      })
+      .catch((err) => console.log(err));
     e.preventDefault();
   }
 

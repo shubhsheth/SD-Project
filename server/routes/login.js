@@ -2,7 +2,6 @@ const { body, check, validationResult } = require("express-validator");
 const md5 = require("md5");
 const db = require("../db/db");
 
-let userid = ""
 
 
 const validate = (method) => {
@@ -34,7 +33,7 @@ const validate = (method) => {
     }
     case "addUserProfile": {
       return [
-        check("userId")
+        check("userid")
           .exists()
           .not()
           .isEmpty()
@@ -127,7 +126,7 @@ const addUser = (req, res, next) => {
       } else {
         db.query("INSERT INTO `users` (username, password) VALUES (?, ?)", [username, password], (err, result, fields) => {
             if (err) { return next(new Error([err])); }
-            return res.sendStatus(200);
+            return res.send({ });
           }
         );
       }
@@ -141,7 +140,7 @@ const addUserProfile = (req, res, next) => {
     return res.status(400).json({ errors: errors.array() });
   }
 
-  const userId = req.body.userId;
+  const userid = req.body.userid;
   const fullname = req.body.fullname;
   const address1 = req.body.address1;
   const address2 = req.body.address2;
@@ -150,7 +149,7 @@ const addUserProfile = (req, res, next) => {
   const zip = req.body.zip;
 
   db.query(
-    `UPDATE \`users\` SET name='${fullname}', address1='${address1}', address2='${address2}', city='${city}', state='${state}', zip='${zip}', credentials=1 WHERE idusers=${userId}`,
+    `UPDATE \`users\` SET name='${fullname}', address1='${address1}', address2='${address2}', city='${city}', state='${state}', zip='${zip}', credentials=1 WHERE idusers=${userid}`,
     (err, result, fields) => {
       if (err) {
         next(new Error([err]));

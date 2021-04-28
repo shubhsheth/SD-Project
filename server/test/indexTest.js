@@ -69,7 +69,7 @@ describe("Task API", () => {
   describe("POST /profile-management", () => {
     it("It should update profile", (done) => {
       const user = {
-        userId: 24,
+        userid: 24,
         fullname: "z",
         address1: "test1",
         address2: "test2",

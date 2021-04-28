@@ -99,9 +99,9 @@ export default function Signup() {
         if (res.data.error) {
           console.log(res.data.error);
         } else {
-          setTimeout(() => {
-            history.push("/login");
-          }, 2000);
+            setTimeout(() => {
+              history.push("/login");
+            }, 2000);
         }
       })
       .catch((err) => console.log(err));
@@ -111,11 +111,6 @@ export default function Signup() {
 
   return (
     <Container component="main" maxWidth="xs">
-      {/* {signupError ? (
-        <Alert variant="filled" severity="error">
-          {signupError}
-        </Alert>
-      ) : null} */}
       <CssBaseline />
       <div className={classes.paper}>
         <Avatar className={classes.avatar}>
