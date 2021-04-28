@@ -26,17 +26,12 @@ export default function FuelHistory() {
   const classes = useRowStyles();
   const [history, setHistory] = useState([])
 
-  const myList = [
-    { location: "TX", gallons: "2", date: "2-2-2021", quote: "a", total: "50" },
-    { location: "TX", gallons: "2", date: "2-2-2021", quote: "a", total: "50" },
-  ]
-
   const columns = [
-    { label: "Location", key: "location", align: "center" },
-    { label: "Gallons", key: "gallons", align: "center" },
-    { label: "Date", key: "date", align: "center" },
-    { label: "Quote", key: "quote", align: "center" },
-    { label: "Total", key: "total", align: "center" },
+    { label: "Gallons", key: "gallons", align: "right" },
+    { label: "State", key: "location", align: "right" },
+    { label: "Date & Time", key: "date", align: "right" },
+    { label: "Price Per Gallon ($)", key: "quote", align: "right" },
+    { label: "Total ($)", key: "total", align: "right" },
   ];
 
   const getHistory = () => {
@@ -72,14 +67,23 @@ export default function FuelHistory() {
           </TableRow>
         </TableHead>
         <TableBody>
-          {myList.map((row, index) => (
-            <TableRow key={index} >
-              {columns.map((column) => {
-                  return (
-                    <TableCell key={column.key} align={column.align}>
-                    {row[column.key]}
-                    </TableCell>);
-              })}
+          {history.map((row, index) => (
+            <TableRow key={index}>
+              <TableCell align="right">
+                {row.gallons}
+              </TableCell>
+              <TableCell align="right">
+                {row.address}
+              </TableCell>
+              <TableCell align="right">
+                {Date(row.date).toString()}
+              </TableCell>
+              <TableCell align="right">
+                {row.price}
+              </TableCell>
+              <TableCell align="right">
+                {parseFloat(row.total).toFixed(2)}
+              </TableCell>
             </TableRow>
           ))}
         </TableBody>

@@ -9,7 +9,6 @@ import Typography from "@material-ui/core/Typography";
 import Button from "@material-ui/core/Button";
 import Link from "@material-ui/core/Link";
 
-import FuelQuoteList from "./FuelQuoteList";
 import FuelQuoteGetQuote from "./FuelQuoteGetQuote";
 
 const useStyles = makeStyles((theme) => ({
@@ -79,9 +78,6 @@ const useStyles = makeStyles((theme) => ({
     fontSize: "18px",
     marginTop: theme.spacing(3),
   },
-  quoteList: {
-    marginTop: theme.spacing(5),
-  },
 }));
 
 export default function FuelQuote({userId}) {
@@ -119,9 +115,6 @@ export default function FuelQuote({userId}) {
               <Button className={classes.button}>View History</Button>
             </Link>
           </Grid>
-        </Grid>
-        <Grid item xs={12} className={classes.quoteList}>
-          <FuelQuoteList />
         </Grid>
       </Grid>
     </div>
