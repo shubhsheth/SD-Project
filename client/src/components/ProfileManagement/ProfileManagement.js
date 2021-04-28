@@ -75,7 +75,7 @@ export default function ProfileManagement() {
 	  const save = (e) => {
       axios
         .post(process.env.REACT_APP_SERVER_URL + "profile-management", {
-          userId: localStorage.getItem("userid"),
+          userid: localStorage.getItem("userid"),
           fullname: profileCred.fullname,
           address1: profileCred.address1,
           address2: profileCred.address2,

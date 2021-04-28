@@ -95,7 +95,7 @@ const Transition = React.forwardRef(function Transition(props, ref) {
   return <Slide direction="up" ref={ref} {...props} />;
 });
 
-export default function FuelQuoteGetQuote({userId}) {
+export default function FuelQuoteGetQuote() {
   const classes = useStyles();
 
   const usStates = [
@@ -173,18 +173,11 @@ export default function FuelQuoteGetQuote({userId}) {
   const enabled = quoteForm.gallons.length > 0 && quoteForm.location.length > 0;
 
   const [showCalculation, setShowCalculation] = useState(false);
-  // const [suggestedPrice, setSuggestedPrice] = useState(null);
-  // const [totalPrice, setTotalPrice] = useState(null);
-  // const [userId2, setUserId2] = useState(null);
+ 
   const [getQuote, setGetQuote] = useState({
     quote: "",
     total: "",
   }) 
-
-
-  // useEffect(() => {
-  //   setUserId2(userId);
-  // }, []);
 
   const handleChange = (e) => {
     setQuoteForm({
@@ -226,7 +219,6 @@ export default function FuelQuoteGetQuote({userId}) {
             quote: res.data.quote,
             total: res.data.total
           });
-          // localStorage.setItem("userid", res.data.userid);
         })
   };
 

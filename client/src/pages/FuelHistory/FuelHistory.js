@@ -8,6 +8,8 @@ import Typography from "@material-ui/core/Typography";
 import Button from "@material-ui/core/Button";
 import Link from "@material-ui/core/Link";
 
+import { useHistory } from "react-router-dom";
+
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -60,6 +62,7 @@ const useStyles = makeStyles((theme) => ({
 
 function FuelHistory() {
     const classes = useStyles();
+    const history = useHistory();
 
   return (
     <div className={classes.root}>
@@ -67,7 +70,13 @@ function FuelHistory() {
           <AppBar className={classes.navbar} position="absolute">
           <Toolbar>
             <Link href="/" style={{ textDecoration: "none" }}>
-              <Button className={classes.logIn}>Logout</Button>
+              <Button 
+                className={classes.logIn}
+                onClick={() => {
+                  localStorage.clear();
+                  history.push("/");
+                }}
+              >Logout</Button>
             </Link>
           </Toolbar>
         </AppBar>

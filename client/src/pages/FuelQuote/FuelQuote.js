@@ -11,6 +11,8 @@ import Link from "@material-ui/core/Link";
 
 import FuelQuoteGetQuote from "./FuelQuoteGetQuote";
 
+import { useHistory } from "react-router-dom";
+
 const useStyles = makeStyles((theme) => ({
   root: {
     // flexGrow: 1,
@@ -80,8 +82,14 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-export default function FuelQuote({userId}) {
+export default function FuelQuote() {
   const classes = useStyles();
+  const history = useHistory();
+
+  const logOut = () => {
+    localStorage.clear();
+    history.push("/")
+  }
 
   return (
     <div className={classes.root}>
@@ -97,7 +105,9 @@ export default function FuelQuote({userId}) {
               </Link>
             </Typography>
             <Link href="/" style={{ textDecoration: "none" }}>
-              <Button className={classes.logIn}>Logout</Button>
+              <Button className={classes.logIn} onClick={logOut} 
+              
+              >Logout</Button>
             </Link>
           </Toolbar>
         </AppBar>
@@ -108,7 +118,7 @@ export default function FuelQuote({userId}) {
         </Grid>
         <Grid container direction="row" justify="space-evenly" alignItems="center">
           <Grid item >
-            <FuelQuoteGetQuote userId={userId} />
+            <FuelQuoteGetQuote />
           </Grid>
           <Grid item >
             <Link href="fuel-history" style={{ textDecoration: "none" }}>
