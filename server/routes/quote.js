@@ -40,6 +40,7 @@ const validate = (method) => {
           .not()
           .isEmpty()
           .isNumeric()
+          .custom((val, { req }) => { return req.body.gallons >= 0 })
           .withMessage('Bad Request')
       ];
     }
@@ -83,7 +84,6 @@ const validate = (method) => {
 };
 
 const getQuote = async (req, res) => {
-  console.log({ req })
 
   const errors = validationResult(req);
   if (!errors.isEmpty()) {
