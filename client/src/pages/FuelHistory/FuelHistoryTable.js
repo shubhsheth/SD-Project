@@ -34,6 +34,11 @@ export default function FuelHistory() {
     { label: "Total ($)", key: "total", align: "right" },
   ];
 
+  const formatDate = (t) => {
+    let d = new Date(parseInt(t));
+    return d.toLocaleString();
+  }
+
   const getHistory = () => {
     axios
       .post(process.env.REACT_APP_SERVER_URL + "fuel-history", {
@@ -76,7 +81,7 @@ export default function FuelHistory() {
                 {row.address}
               </TableCell>
               <TableCell align="right">
-                {Date(row.date).toString()}
+                {formatDate(row.date)}
               </TableCell>
               <TableCell align="right">
                 {row.price}
